@@ -7,8 +7,8 @@ import Provider from "./provider.tsx";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Remote_Work_Setup",
-  description: "Creating a Project to make remote work easy.",
+  title: "KarthikaySignage",
+  description: "KarthikaySignage",
 };
 
 export default function RootLayout({

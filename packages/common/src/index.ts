@@ -8,6 +8,4 @@ export const GOOGLE_ID = process.env.GOOGLE_ID
 export const GOOGLE_SECRET = process.env.GOOGLE_SECRET
 export const NEXTAUTH_SECRET = process.env.NEXTAUTH_SECRET
 
-export const ADMIN_USERNAME = process.env.ADMIN_USERNAME
-export const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD
 export const JWT_SECRET = process.env.JWT_SECRET

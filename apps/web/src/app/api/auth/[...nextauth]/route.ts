@@ -1,9 +1,8 @@
 import NextAuth from "next-auth"
-import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 import {PrismaAdapter} from '@next-auth/prisma-adapter';
 import {prisma} from "@repo/db";
-import {GITHUB_ID, GITHUB_SECRET, GOOGLE_ID, GOOGLE_SECRET, NEXTAUTH_SECRET} from "@repo/common/src";
+import {GOOGLE_ID, GOOGLE_SECRET, NEXTAUTH_SECRET} from "@repo/common/src";
 
 type SessionProps = {
     session: any;
@@ -14,10 +13,6 @@ export const authOptions = {
     adapter: PrismaAdapter(prisma),
 
     providers: [
-        GithubProvider({
-            clientId: GITHUB_ID ?? "",
-            clientSecret: GITHUB_SECRET ?? "",
-        }),
         GoogleProvider ({
             clientId: GOOGLE_ID ?? "",
             clientSecret: GOOGLE_SECRET ?? ""
