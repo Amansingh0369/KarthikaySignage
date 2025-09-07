@@ -15,7 +15,14 @@ export const authOptions = {
     providers: [
         GoogleProvider ({
             clientId: GOOGLE_ID ?? "",
-            clientSecret: GOOGLE_SECRET ?? ""
+            clientSecret: GOOGLE_SECRET ?? "",
+            authorization: {
+                params: {
+                prompt: 'consent',
+                access_type: 'offline',
+                response_type: 'code',
+                },
+      },
         })
     ],
 
