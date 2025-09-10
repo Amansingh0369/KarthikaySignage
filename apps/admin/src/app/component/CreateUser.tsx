@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import axios from 'axios';
 
 interface UserFormData {
   name: string;
@@ -110,11 +111,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({ onSuccess }) => {
 
     try {
       // Simulate API call
-    const res = await fetch('/api/Admin',{
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify(formData)
-    })
+    const res = await axios.post('/api/Admin', formData)
 
     console.log(res);
         

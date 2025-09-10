@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import axios from 'axios';
 
 interface Admin {
   id: string;
@@ -91,17 +92,13 @@ const EditUser: React.FC<EditUserProps> = ({ admin, onSuccess, onCancel }) => {
     setIsSubmitting(true);
 
     try {
-      const res = await fetch('/api/Admin', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          id: formData.id,
-          role: formData.role,
-          access: formData.access
-        })
+      const res = await axios.put('/api/Admin', {
+        id: formData.id,
+        role: formData.role,
+        access: formData.access
       });
 
-      if (!res.ok) {
+      if (res.status !== 200) {
         throw new Error('Failed to update user');
       }
 

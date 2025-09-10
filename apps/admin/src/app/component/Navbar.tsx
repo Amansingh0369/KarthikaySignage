@@ -78,6 +78,13 @@ const NavbarContent = () => {
                   Product Upload
                   <span className="absolute inset-x-0 bottom-0 h-0.5 bg-blue-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-200"></span>
                 </button>
+                <button
+                  onClick={() => router.push("/products")}
+                  className="px-4 py-2 text-slate-700 hover:text-blue-700 font-medium transition-all duration-200 rounded-lg hover:bg-blue-50/80 relative group"
+                >
+                  Products
+                  <span className="absolute inset-x-0 bottom-0 h-0.5 bg-blue-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-200"></span>
+                </button>
               </>
             )}
           </div>
