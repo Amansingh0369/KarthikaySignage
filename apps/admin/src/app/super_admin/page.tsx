@@ -2,6 +2,7 @@
 
 import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
+import axios from "axios";
 import UserDetails from "../component/UserDetails";
 import CreateUser from "../component/CreateUser";
 import Navbar from "../component/Navbar";
@@ -33,11 +34,10 @@ const SuperAdmin = () => {
   const fetchAdmins = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/Admin');
-      const result = await response.json();
+      const response = await axios.get('/api/Admin');
       
-      if (result.success) {
-        setAdmins(result.data);
+      if (response.data.success) {
+        setAdmins(response.data.data);
         setError(null);
       } else {
         setError('Failed to fetch admins');
@@ -65,11 +65,9 @@ const SuperAdmin = () => {
 
     setIsDeleting(true);
     try {
-      const res = await fetch(`/api/Admin?id=${deletingAdmin.id}`, {
-        method: 'DELETE',
-      });
+      const res = await axios.delete(`/api/Admin?id=${deletingAdmin.id}`);
 
-      if (!res.ok) {
+      if (res.status !== 200) {
         throw new Error('Failed to delete user');
       }
 

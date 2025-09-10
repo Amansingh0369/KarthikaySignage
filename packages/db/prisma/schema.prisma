@@ -7,17 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Role {
-  ADMIN
-  SUPER_ADMIN
-}
-
-enum Access {
-   DASHBOARD
-   PRODUCT_UPLOAD
-   USER_MANAGEMENT
-}
-
 model Account {
   id                String  @id @default(cuid())
   userId            String
@@ -50,10 +39,63 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  phone         String?   // User's primary phone number
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt @default(now())
+  
+  // Relations
   accounts      Account[]
   sessions      Session[]
+  orders        Order[]
+  reviews       Review[]
+  addresses     UserAddress[]
 }
 
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// USER ADDRESS MODEL
+model UserAddress {
+  id          String    @id @default(cuid())
+  userId      String
+  type        AddressType @default(HOME)
+  label       String?   // Custom label like "Home", "Office", "Mom's House"
+  firstName   String
+  lastName    String
+  phone       String?   // Phone number for this specific address
+  addressLine1 String
+  addressLine2 String?
+  city        String
+  state       String
+  postalCode  String
+  country     String    @default("India")
+  isDefault   Boolean   @default(false)
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  // Relations
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  shippingOrders Order[] @relation("ShippingAddress")
+  billingOrders  Order[] @relation("BillingAddress")
+  
+  @@index([userId])
+  @@index([isDefault])
+  @@index([isActive])
+}
+
+enum AddressType {
+  HOME
+  OFFICE
+  OTHER
+}
+
+// ADMIN MODEL & ENUM
 model Admin {
   id            String    @id @default(cuid())
   name          String?
@@ -66,10 +108,278 @@ model Admin {
   updatedAt     DateTime  @updatedAt
 }
 
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
+enum Role {
+  ADMIN
+  SUPER_ADMIN
+}
 
-  @@unique([identifier, token])
+enum Access {
+  DASHBOARD
+  PRODUCT_UPLOAD
+  USER_MANAGEMENT
+  ORDER_MANAGEMENT
+}
+
+// PRODUCT MODELS
+model Product {
+  id          String    @id @default(cuid())
+  name        String
+  description String?   @db.Text
+  category    ProductCategory
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  // Relations
+  neonSigns   NeonSign[]
+  orderItems  OrderItem[]
+  reviews     Review[]
+  
+  @@index([category])
+  @@index([isActive])
+}
+
+model NeonSign {
+  id          String    @id @default(cuid())
+  productId   String
+  
+  // Pricing configuration (admin configured)
+  minWidth    Float     // Minimum width in inches
+  minHeight   Float     // Minimum height in inches
+  basePrice   Float     // Base price for minimum dimensions (proportional pricing)
+  
+  // Discount configuration
+  discountType DiscountType? // PERCENTAGE or FIXED_AMOUNT
+  discountValue Float?       // Discount percentage (0-100) or fixed amount
+  
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  // Relations
+  product     Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  orderItems  OrderItem[]
+  
+  @@index([productId])
+  @@index([isActive])
+}
+
+model Color {
+  id          String    @id @default(cuid())
+  name        String    // e.g., "Red", "Blue", "Green"
+  hexCode     String    // e.g., "#FF0000"
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  // Relations
+  orderItems  OrderItem[]
+  
+  @@unique([hexCode])
+  @@index([isActive])
+}
+
+model Font {
+  id          String    @id @default(cuid())
+  name        String    // e.g., "Arial", "Times New Roman"
+  fontFamily  String    // CSS font-family value
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  // Relations
+  orderItems  OrderItem[]
+  
+  @@unique([fontFamily])
+  @@index([isActive])
+}
+
+// ORDER MODELS
+model Order {
+  id              String      @id @default(cuid())
+  userId          String
+  orderNumber     Int         @unique @default(autoincrement())
+  status          OrderStatus @default(PENDING)
+  totalAmount     Float
+  shippingAddressId String    // Reference to UserAddress
+  billingAddressId  String?   // Reference to UserAddress (optional, can be same as shipping)
+  razorpayOrderId String?     // Razorpay order ID
+  razorpayPaymentId String?   // Razorpay payment ID
+  paymentStatus   PaymentStatus @default(PENDING)
+  notes           String?     @db.Text
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  
+  // Relations
+  user            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  shippingAddress UserAddress @relation("ShippingAddress", fields: [shippingAddressId], references: [id])
+  billingAddress  UserAddress? @relation("BillingAddress", fields: [billingAddressId], references: [id])
+  orderItems      OrderItem[]
+  orderStatusHistory OrderStatusHistory[]
+  razorpayPayments RazorpayPayment[]
+  
+  @@index([userId])
+  @@index([status])
+  @@index([paymentStatus])
+  @@index([createdAt])
+}
+
+model OrderItem {
+  id          String    @id @default(cuid())
+  orderId     String
+  productId   String
+  neonSignId  String?   // Only for neon signs (pricing configuration)
+  quantity    Int       @default(1)
+  unitPrice   Float
+  totalPrice  Float
+  
+  // Neon sign specific fields (customer specifications)
+  text        String?   // The text to be displayed on the neon sign
+  width       Float?    // Width in inches (customer specified)
+  height      Float?    // Height in inches (customer specified)
+  colorId     String?   // Selected color
+  fontId      String?   // Selected font
+  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  // Relations
+  order       Order     @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product     Product   @relation(fields: [productId], references: [id])
+  neonSign    NeonSign? @relation(fields: [neonSignId], references: [id])
+  color       Color?    @relation(fields: [colorId], references: [id])
+  font        Font?     @relation(fields: [fontId], references: [id])
+  
+  @@index([orderId])
+  @@index([productId])
+}
+
+model OrderStatusHistory {
+  id          String      @id @default(cuid())
+  orderId     String
+  status      OrderStatus
+  notes       String?     @db.Text
+  createdAt   DateTime    @default(now())
+  
+  // Relations
+  order       Order       @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  
+  @@index([orderId])
+  @@index([createdAt])
+}
+
+// REVIEW MODEL
+model Review {
+  id          String    @id @default(cuid())
+  userId      String
+  productId   String
+  rating      Int       // 1-5 stars
+  title       String?
+  comment     String?   @db.Text
+  isApproved  Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  // Relations
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product     Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+  @@index([productId])
+  @@index([isApproved])
+  @@index([createdAt])
+}
+
+// RAZORPAY INTEGRATION MODELS
+model RazorpayPayment {
+  id                String    @id @default(cuid())
+  orderId           String
+  razorpayOrderId   String    @unique
+  razorpayPaymentId String?   @unique
+  razorpaySignature String?   // Webhook signature verification
+  amount            Float
+  currency          String    @default("INR")
+  status            RazorpayPaymentStatus @default(CREATED)
+  method            String?   // payment method used (card, netbanking, etc.)
+  bank              String?   // bank name if applicable
+  wallet            String?   // wallet name if applicable
+  vpa               String?   // UPI VPA if applicable
+  email             String?   // customer email from Razorpay
+  contact           String?   // customer contact from Razorpay
+  fee               Float?    // Razorpay fee
+  tax               Float?    // Tax amount
+  errorCode         String?   // Error code if payment failed
+  errorDescription  String?   // Error description if payment failed
+  webhookReceived   Boolean   @default(false)
+  webhookProcessed  Boolean   @default(false)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  // Relations
+  order             Order     @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  
+  @@index([orderId])
+  @@index([razorpayOrderId])
+  @@index([razorpayPaymentId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model RazorpayWebhook {
+  id              String    @id @default(cuid())
+  eventId         String    @unique
+  eventType       String    // payment.captured, payment.failed, etc.
+  entityType      String    // payment, order, etc.
+  entityId        String    // Razorpay entity ID
+  signature       String    // Webhook signature
+  payload         Json      // Full webhook payload
+  processed       Boolean   @default(false)
+  processingError String?   // Error message if processing failed
+  retryCount      Int       @default(0)
+  createdAt       DateTime  @default(now())
+  processedAt     DateTime?
+  
+  @@index([eventType])
+  @@index([processed])
+  @@index([createdAt])
+}
+
+
+// ENUMS
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  PACKED
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  REFUNDED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+  PARTIALLY_REFUNDED
+}
+
+enum RazorpayPaymentStatus {
+  CREATED
+  AUTHORIZED
+  CAPTURED
+  FAILED
+  CANCELLED
+  EXPIRED
+}
+
+enum DiscountType {
+  PERCENTAGE
+  FIXED_AMOUNT
+}
+
+enum ProductCategory {
+  NEON_SIGN
+  VISITING_CARD
 }
