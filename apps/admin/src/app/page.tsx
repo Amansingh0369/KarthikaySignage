@@ -3,6 +3,7 @@
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import Navbar from "./component/Navbar"
+import { PRIMARY_COLOR_PINK, SECONDARY_COLOR_PURPLE, TERTIARY_COLOR_BLUE } from "./constant"
 
 const Page = () => {
   const session = useSession()
@@ -12,8 +13,15 @@ const Page = () => {
 
   if (status === "loading") {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-400"></div>
+      <div 
+        className="min-h-screen flex items-center justify-center"
+        style={{
+          background: `linear-gradient(15deg, ${PRIMARY_COLOR_PINK}, ${SECONDARY_COLOR_PURPLE})`
+        }}
+      >
+        <div 
+          className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"
+        ></div>
       </div>
     )
   }
@@ -23,7 +31,12 @@ const Page = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 relative overflow-hidden">
+    <div 
+      className="min-h-screen relative overflow-hidden"
+      style={{
+        background: `linear-gradient(0deg, ${TERTIARY_COLOR_BLUE}, ${SECONDARY_COLOR_PURPLE})`
+      }}
+    >
       <div className="absolute inset-0 opacity-10">
         <div
           className="absolute inset-0"
@@ -40,29 +53,16 @@ const Page = () => {
 
       <div className="relative z-10 min-h-screen flex flex-col justify-center py-12 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto w-full">
-          <div className="text-center mb-20">
+          <div className="text-center mb-4">
             <div className="flex justify-center mb-8">
               <div className="w-32 h-32 bg-gradient-to-br from-blue-400 to-indigo-600 rounded-3xl flex items-center justify-center shadow-2xl shadow-blue-500/25 transform hover:scale-105 transition-transform duration-300">
                 <span className="text-white font-bold text-4xl">KS</span>
               </div>
             </div>
             <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 text-balance">Kartikay Signage</h1>
-            <p className="text-xl md:text-2xl text-blue-100 max-w-4xl mx-auto mb-8 text-pretty">
+            <p className="text-xl md:text-2xl text-blue-100 max-w-4xl mx-auto text-pretty">
               Professional signage solutions that make your business stand out
             </p>
-
-            <div className="flex justify-center items-center gap-4 mb-12">
-              <div className="h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent w-24"></div>
-              <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-              <div className="h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent w-24"></div>
-            </div>
-
-            <div className="max-w-2xl mx-auto">
-              <blockquote className="text-2xl md:text-3xl font-light text-blue-100 italic leading-relaxed">
-                "Great design isn't just about how it looks, but how it works."
-              </blockquote>
-              <p className="text-blue-300 mt-4 text-sm tracking-wide">— Design Philosophy</p>
-            </div>
           </div>
 
           {sessionData ? (
