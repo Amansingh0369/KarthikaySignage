@@ -3,6 +3,7 @@
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import Navbar from "./component/Navbar"
+import Sidebar from "./component/Sidebar"
 import { PRIMARY_COLOR_PINK, SECONDARY_COLOR_PURPLE, TERTIARY_COLOR_BLUE } from "./constant"
 
 const Page = () => {
@@ -49,9 +50,10 @@ const Page = () => {
 
       <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
 
+      <Sidebar />
       <Navbar />
 
-      <div className="relative z-10 min-h-screen flex flex-col justify-center py-12 px-4 sm:px-6">
+      <div className="relative z-10 min-h-screen flex flex-col justify-center py-12 px-4 sm:px-6 ml-20 md:ml-20 pt-20">
         <div className="max-w-7xl mx-auto w-full">
           <div className="text-center mb-4">
             <div className="flex justify-center mb-8">

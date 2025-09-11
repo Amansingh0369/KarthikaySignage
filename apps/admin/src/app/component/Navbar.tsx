@@ -24,7 +24,7 @@ const NavbarContent = () => {
 
   if (status === "loading") {
     return (
-      <nav className="bg-gradient-to-r from-slate-50 to-blue-50 backdrop-blur-sm border-b border-slate-200/60">
+      <nav className="bg-gradient-to-r from-slate-50 to-blue-50 backdrop-blur-sm border-b border-slate-200/60 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-5">
             <div className="animate-pulse flex items-center space-x-3">
@@ -51,42 +51,6 @@ const NavbarContent = () => {
                 Kartikay Signage
               </h1>
             </div>
-          </div>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-1">
-            {session && (
-              <>
-                <button
-                  onClick={() => router.push("/")}
-                  className="px-4 py-2 text-slate-700 hover:text-blue-700 font-medium transition-all duration-200 rounded-lg hover:bg-blue-50/80 relative group"
-                >
-                  Dashboard
-                  <span className="absolute inset-x-0 bottom-0 h-0.5 bg-blue-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-200"></span>
-                </button>
-                <button
-                  onClick={() => router.push("/super_admin")}
-                  className="px-4 py-2 text-slate-700 hover:text-blue-700 font-medium transition-all duration-200 rounded-lg hover:bg-blue-50/80 relative group"
-                >
-                  User Management
-                  <span className="absolute inset-x-0 bottom-0 h-0.5 bg-blue-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-200"></span>
-                </button>
-                <button
-                  onClick={() => router.push("/product_upload")}
-                  className="px-4 py-2 text-slate-700 hover:text-blue-700 font-medium transition-all duration-200 rounded-lg hover:bg-blue-50/80 relative group"
-                >
-                  Product Upload
-                  <span className="absolute inset-x-0 bottom-0 h-0.5 bg-blue-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-200"></span>
-                </button>
-                <button
-                  onClick={() => router.push("/products")}
-                  className="px-4 py-2 text-slate-700 hover:text-blue-700 font-medium transition-all duration-200 rounded-lg hover:bg-blue-50/80 relative group"
-                >
-                  Products
-                  <span className="absolute inset-x-0 bottom-0 h-0.5 bg-blue-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-200"></span>
-                </button>
-              </>
-            )}
           </div>
 
           {/* Login/Logout button always at the end */}
@@ -155,12 +119,12 @@ const NavbarContent = () => {
                   <div className="flex items-center space-x-3 mb-4 p-3 bg-slate-50/80 rounded-xl">
                     <img
                       className="w-10 h-10 rounded-full ring-2 ring-blue-200 shadow-sm"
-                      src={session.user.image || "https://via.placeholder.com/40"}
-                      alt={session.user.name || "User"}
+                      src={session.user?.image || "https://via.placeholder.com/40"}
+                      alt={session.user?.name || "User"}
                     />
                     <div>
-                      <p className="text-sm font-semibold text-slate-900">{session.user.name}</p>
-                      <p className="text-xs text-slate-600">{session.user.email}</p>
+                      <p className="text-sm font-semibold text-slate-900">{session.user?.name}</p>
+                      <p className="text-xs text-slate-600">{session.user?.email}</p>
                     </div>
                   </div>
                   <button

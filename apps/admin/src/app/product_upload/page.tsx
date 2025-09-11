@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import Navbar from "../component/Navbar";
+import Sidebar from "../component/Sidebar";
 
 // Product categories enum
 enum ProductCategory {
@@ -109,6 +110,7 @@ const ProductUploadPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <Sidebar />
       <Navbar />
       
       {/* Category Selection Modal */}
@@ -167,7 +169,7 @@ const ProductUploadPage = () => {
 
       {/* Product Upload Form */}
       {selectedCategory && (
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 ml-20 pt-20">
           {/* Header */}
           <div className="mb-8">
             <div className="flex items-center justify-between">

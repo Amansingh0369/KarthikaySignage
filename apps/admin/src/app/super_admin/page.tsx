@@ -6,6 +6,7 @@ import axios from "axios";
 import UserDetails from "../component/UserDetails";
 import CreateUser from "../component/CreateUser";
 import Navbar from "../component/Navbar";
+import Sidebar from "../component/Sidebar";
 import DeleteConfirmationModal from "../component/DeleteConfirmationModal"; // Import the modal
 
 interface Admin {
@@ -112,10 +113,11 @@ const SuperAdmin = () => {
 
       <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
 
+      <Sidebar />
       <Navbar />
       
       {/* Main Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="relative z-10 ml-20 pt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header with Add Button */}
         <div className="flex justify-between items-center mb-8">
           <div>

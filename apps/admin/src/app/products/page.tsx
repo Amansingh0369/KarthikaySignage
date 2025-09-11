@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Navbar from "../component/Navbar";
+import Sidebar from "../component/Sidebar";
 import Link from "next/link";
 
 interface NeonSign {
@@ -180,9 +181,10 @@ const ProductsPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <Sidebar />
       <Navbar />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 ml-20 pt-20">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between">
