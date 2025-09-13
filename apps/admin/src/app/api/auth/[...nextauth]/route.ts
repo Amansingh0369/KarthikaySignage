@@ -1,6 +1,5 @@
 import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
-import {PrismaAdapter} from '@next-auth/prisma-adapter';
 import {prisma} from "@repo/db";
 import {GOOGLE_ID_ADMIN, GOOGLE_SECRET_ADMIN, NEXTAUTH_SECRET} from "@repo/common/src";
 
@@ -10,8 +9,6 @@ type SessionProps = {
 }
 
 export const authOptions = {
-    adapter: PrismaAdapter(prisma),
-
     providers: [
         GoogleProvider ({
             clientId: GOOGLE_ID_ADMIN ?? "",
@@ -27,11 +24,14 @@ export const authOptions = {
     ],
 
     secret: NEXTAUTH_SECRET,
+    session: {
+        strategy: "jwt",
+    },
 
     callbacks: {
-    async signIn({ user, account }: { user: any; account: any }) {
+    async signIn({ user }: { user: any; }) {
       // For Google login, check if the user exists in admin table
-      if (account?.provider === 'google' && user.email) {
+      if (user.email) {
         try {
           const existingAdmin = await prisma.admin.findUnique({
             where: { email: user.email },
@@ -59,15 +59,15 @@ export const authOptions = {
 
       return true;
     },
-    async jwt({ token, user, account }: { token: any; user: any; account: any }) {
+    async jwt({ token, user }: { token: any; user: any; }) {
       // Initial sign in
-      if (account && user) {
+      if (user) {
         return {
           ...token,
           id: user.id,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          type: user.type,
+          name: user.name,
+          email: user.email,
+          role: user.role,
           access: user.access,
         };
       }
@@ -75,10 +75,14 @@ export const authOptions = {
       // Return previous token if the user hasn't changed
       return token;
     },
-        async session({ session, user } : SessionProps) {
-            session.user.id = user.id;
-            return session;
-        },
+    async session({ session, token } : { session: any; token: any }) {
+      if (token) {
+        session.user.id = token.id;
+        session.user.role = token.role;
+        session.user.access = token.access;
+      }
+      return session;
+    },
     },
 }
 
