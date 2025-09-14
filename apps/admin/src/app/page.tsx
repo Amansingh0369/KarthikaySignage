@@ -15,13 +15,10 @@ const Page = () => {
   if (status === "loading") {
     return (
       <div 
-        className="min-h-screen flex items-center justify-center"
-        style={{
-          background: `linear-gradient(15deg, ${PRIMARY_COLOR_PINK}, ${SECONDARY_COLOR_PURPLE})`
-        }}
+        className="min-h-screen flex items-center justify-center bg-gray-50"
       >
         <div 
-          className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"
+          className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#e00885]"
         ></div>
       </div>
     )
@@ -33,22 +30,19 @@ const Page = () => {
 
   return (
     <div 
-      className="min-h-screen relative overflow-hidden"
-      style={{
-        background: `linear-gradient(0deg, ${TERTIARY_COLOR_BLUE}, ${SECONDARY_COLOR_PURPLE})`
-      }}
+      className="min-h-screen relative overflow-hidden bg-white"
     >
-      <div className="absolute inset-0 opacity-10">
+      <div className="absolute inset-0 opacity-5">
         <div
           className="absolute inset-0"
           style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)`,
+            backgroundImage: `radial-gradient(circle at 1px 1px, rgba(0,0,0,0.15) 1px, transparent 0)`,
             backgroundSize: "20px 20px",
           }}
         ></div>
       </div>
 
-      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-gray-100/20 via-transparent to-transparent"></div>
 
       <Sidebar />
       <Navbar />
@@ -65,8 +59,8 @@ const Page = () => {
                 />
               </div>
             </div>
-            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 text-balance">Kartikay Signage</h1>
-            <p className="text-xl md:text-2xl text-[#e6e0f0] max-w-4xl mx-auto text-pretty">
+            <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 text-balance">Kartikay Signage</h1>
+            <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto text-pretty">
               Professional signage solutions that make your business stand out
             </p>
           </div>
@@ -74,7 +68,7 @@ const Page = () => {
           {sessionData ? (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
               <div
-                className="group bg-white/10 backdrop-blur-lg border border-[#e00885]/20 rounded-3xl shadow-2xl overflow-hidden hover:shadow-[#e00885]/25 hover:shadow-2xl transition-all duration-500 cursor-pointer transform hover:-translate-y-2 hover:bg-white/15"
+                className="group bg-white border border-[#e00885]/20 rounded-3xl shadow-2xl overflow-hidden hover:shadow-[#e00885]/25 hover:shadow-2xl transition-all duration-500 cursor-pointer transform hover:-translate-y-2 hover:bg-white"
                 onClick={() => handleNavigation("/super_admin")}
               >
                 <div className="p-10">
@@ -89,13 +83,13 @@ const Page = () => {
                         />
                       </svg>
                     </div>
-                    <h2 className="text-3xl font-bold text-white ml-6">Admin Panel</h2>
+                    <h2 className="text-3xl font-bold text-gray-900 ml-6">Admin Panel</h2>
                   </div>
-                  <p className="text-[#e6e0f0] mb-8 text-lg leading-relaxed">
+                  <p className="text-gray-600 mb-8 text-lg leading-relaxed">
                     Manage users, permissions, and system settings. Access advanced administrative controls with full
                     oversight capabilities.
                   </p>
-                  <div className="flex items-center text-[#e6e0f0] font-semibold text-lg group-hover:text-[#e00885] transition-colors">
+                  <div className="flex items-center text-gray-600 font-semibold text-lg group-hover:text-[#e00885] transition-colors">
                     <span>Access Dashboard</span>
                     <svg
                       className="w-6 h-6 ml-3 group-hover:translate-x-1 transition-transform"
@@ -110,7 +104,7 @@ const Page = () => {
               </div>
 
               <div
-                className="group bg-white/10 backdrop-blur-lg border border-[#e00885]/20 rounded-3xl shadow-2xl overflow-hidden hover:shadow-[#3c2a98]/25 hover:shadow-2xl transition-all duration-500 cursor-pointer transform hover:-translate-y-2 hover:bg-white/15"
+                className="group bg-white border border-[#e00885]/20 rounded-3xl shadow-2xl overflow-hidden hover:shadow-[#3c2a98]/25 hover:shadow-2xl transition-all duration-500 cursor-pointer transform hover:-translate-y-2 hover:bg-white"
                 onClick={() => handleNavigation("/product_upload")}
               >
                 <div className="p-10">
@@ -125,12 +119,12 @@ const Page = () => {
                         />
                       </svg>
                     </div>
-                    <h2 className="text-3xl font-bold text-white ml-6">Product Upload</h2>
+                    <h2 className="text-3xl font-bold text-gray-900 ml-6">Product Upload</h2>
                   </div>
-                  <p className="text-[#e6e0f0] mb-8 text-lg leading-relaxed">
+                  <p className="text-gray-600 mb-8 text-lg leading-relaxed">
                     Upload new products, manage inventory, and update product information with streamlined workflows.
                   </p>
-                  <div className="flex items-center text-[#e6e0f0] font-semibold text-lg group-hover:text-[#e00885] transition-colors">
+                  <div className="flex items-center text-gray-600 font-semibold text-lg group-hover:text-[#e00885] transition-colors">
                     <span>Upload Products</span>
                     <svg
                       className="w-6 h-6 ml-3 group-hover:translate-x-1 transition-transform"
@@ -146,7 +140,7 @@ const Page = () => {
             </div>
           ) : (
             <div className="max-w-3xl mx-auto text-center">
-              <div className="bg-white/10 backdrop-blur-lg border border-[#e00885]/20 rounded-3xl shadow-2xl p-12">
+              <div className="bg-white border border-[#e00885]/20 rounded-3xl shadow-2xl p-12">
                 <div className="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-lg">
                   <img 
                     src="/logo.jpeg" 
@@ -154,8 +148,8 @@ const Page = () => {
                     className="w-full h-full object-contain rounded-2xl"
                   />
                 </div>
-                <h3 className="text-3xl font-bold text-white mb-6">Admin Access Required</h3>
-                <p className="text-xl text-[#e6e0f0] leading-relaxed">
+                <h3 className="text-3xl font-bold text-gray-900 mb-6">Admin Access Required</h3>
+                <p className="text-xl text-gray-600 leading-relaxed">
                   Please sign in to access the admin dashboard and manage your signage products and users with our
                   comprehensive management tools.
                 </p>
