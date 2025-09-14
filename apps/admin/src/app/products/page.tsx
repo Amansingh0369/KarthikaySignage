@@ -163,7 +163,7 @@ const ProductsPage = () => {
   if (status === "loading") {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#e00885]"></div>
       </div>
     );
   }
@@ -184,7 +184,7 @@ const ProductsPage = () => {
       <Sidebar />
       <Navbar />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 ml-20 pt-20">
+      <div className=" mx-auto px-4 sm:px-6 lg:px-8 py-8 ml-20 pt-20">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between">
@@ -194,7 +194,7 @@ const ProductsPage = () => {
             </div>
             <Link
               href="/product_upload"
-              className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#e00885] hover:bg-[#e00885] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#e00885]"
             >
               <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -211,7 +211,7 @@ const ProductsPage = () => {
               onClick={() => setSelectedCategory("all")}
               className={`px-4 py-2 rounded-md text-sm font-medium ${
                 selectedCategory === "all"
-                  ? "bg-blue-100 text-blue-700"
+                  ? "bg-[#e00885]/20 text-[#e00885] border-[#e00885]/30"
                   : "bg-white text-gray-700 hover:bg-gray-50"
               }`}
             >
@@ -221,7 +221,7 @@ const ProductsPage = () => {
               onClick={() => setSelectedCategory("NEON_SIGN")}
               className={`px-4 py-2 rounded-md text-sm font-medium ${
                 selectedCategory === "NEON_SIGN"
-                  ? "bg-blue-100 text-blue-700"
+                  ? "bg-[#e00885]/20 text-[#e00885] border-[#e00885]/30"
                   : "bg-white text-gray-700 hover:bg-gray-50"
               }`}
             >
@@ -231,7 +231,7 @@ const ProductsPage = () => {
               onClick={() => setSelectedCategory("VISITING_CARD")}
               className={`px-4 py-2 rounded-md text-sm font-medium ${
                 selectedCategory === "VISITING_CARD"
-                  ? "bg-blue-100 text-blue-700"
+                  ? "bg-[#e00885]/20 text-[#e00885] border-[#e00885]/30"
                   : "bg-white text-gray-700 hover:bg-gray-50"
               }`}
             >
@@ -243,7 +243,7 @@ const ProductsPage = () => {
         {/* Products Grid */}
         {loading ? (
           <div className="flex items-center justify-center py-12">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#e00885]"></div>
           </div>
         ) : products.length === 0 ? (
           <div className="text-center py-12">
@@ -294,7 +294,7 @@ const ProductsPage = () => {
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#3c2a98]/20 text-[#3c2a98] border-[#3c2a98]/30">
                           {product.category.replace('_', ' ')}
                         </span>
                       </td>
@@ -331,8 +331,8 @@ const ProductsPage = () => {
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                           product.isActive 
-                            ? 'bg-green-100 text-green-800' 
-                            : 'bg-red-100 text-red-800'
+                            ? 'bg-[#10b981]/20 text-[#10b981] border-[#10b981]/30' 
+                            : 'bg-[#e00885]/20 text-[#e00885] border-[#e00885]/30'
                         }`}>
                           {product.isActive ? 'Active' : 'Inactive'}
                         </span>
@@ -343,8 +343,8 @@ const ProductsPage = () => {
                             onClick={() => handleToggleActive(product.id, product.isActive)}
                             className={`px-3 py-1 rounded-md text-xs font-medium ${
                               product.isActive 
-                                ? 'bg-red-100 text-red-700 hover:bg-red-200' 
-                                : 'bg-green-100 text-green-700 hover:bg-green-200'
+                                ? 'bg-[#e00885]/20 text-[#e00885] border-[#e00885]/30 hover:bg-[#e00885]/30' 
+                                : 'bg-[#10b981]/20 text-[#10b981] border-[#10b981]/30 hover:bg-[#10b981]/30'
                             }`}
                           >
                             {product.isActive ? 'Deactivate' : 'Activate'}

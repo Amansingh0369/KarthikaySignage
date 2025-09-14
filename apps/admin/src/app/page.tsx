@@ -15,13 +15,10 @@ const Page = () => {
   if (status === "loading") {
     return (
       <div 
-        className="min-h-screen flex items-center justify-center"
-        style={{
-          background: `linear-gradient(15deg, ${PRIMARY_COLOR_PINK}, ${SECONDARY_COLOR_PURPLE})`
-        }}
+        className="min-h-screen flex items-center justify-center bg-gray-50"
       >
         <div 
-          className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"
+          className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#e00885]"
         ></div>
       </div>
     )
@@ -33,22 +30,19 @@ const Page = () => {
 
   return (
     <div 
-      className="min-h-screen relative overflow-hidden"
-      style={{
-        background: `linear-gradient(0deg, ${TERTIARY_COLOR_BLUE}, ${SECONDARY_COLOR_PURPLE})`
-      }}
+      className="min-h-screen relative overflow-hidden bg-white"
     >
-      <div className="absolute inset-0 opacity-10">
+      <div className="absolute inset-0 opacity-5">
         <div
           className="absolute inset-0"
           style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)`,
+            backgroundImage: `radial-gradient(circle at 1px 1px, rgba(0,0,0,0.15) 1px, transparent 0)`,
             backgroundSize: "20px 20px",
           }}
         ></div>
       </div>
 
-      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-gray-100/20 via-transparent to-transparent"></div>
 
       <Sidebar />
       <Navbar />
@@ -57,12 +51,16 @@ const Page = () => {
         <div className="max-w-7xl mx-auto w-full">
           <div className="text-center mb-4">
             <div className="flex justify-center mb-8">
-              <div className="w-32 h-32 bg-gradient-to-br from-blue-400 to-indigo-600 rounded-3xl flex items-center justify-center shadow-2xl shadow-blue-500/25 transform hover:scale-105 transition-transform duration-300">
-                <span className="text-white font-bold text-4xl">KS</span>
+              <div className="w-32 h-32 rounded-full flex items-center justify-center shadow-2xl shadow-[#e00885]/25 transform hover:scale-105 transition-transform duration-300">
+                <img 
+                  src="/logo.jpeg" 
+                  alt="Kartikay Signage Logo" 
+                  className="w-full h-full object-contain rounded-full hover:scale-105 transition-transform duration-300"
+                />
               </div>
             </div>
-            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 text-balance">Kartikay Signage</h1>
-            <p className="text-xl md:text-2xl text-blue-100 max-w-4xl mx-auto text-pretty">
+            <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 text-balance">Kartikay Signage</h1>
+            <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto text-pretty">
               Professional signage solutions that make your business stand out
             </p>
           </div>
@@ -70,12 +68,12 @@ const Page = () => {
           {sessionData ? (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
               <div
-                className="group bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl shadow-2xl overflow-hidden hover:shadow-blue-500/25 hover:shadow-2xl transition-all duration-500 cursor-pointer transform hover:-translate-y-2 hover:bg-white/15"
+                className="group bg-white border border-[#e00885]/20 rounded-3xl shadow-2xl overflow-hidden hover:shadow-[#e00885]/25 hover:shadow-2xl transition-all duration-500 cursor-pointer transform hover:-translate-y-2 hover:bg-white"
                 onClick={() => handleNavigation("/super_admin")}
               >
                 <div className="p-10">
                   <div className="flex items-center mb-8">
-                    <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <div className="w-16 h-16 bg-gradient-to-br from-[#3c2a98] to-[#3c2a98] rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                       <svg className="w-9 h-9 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path
                           strokeLinecap="round"
@@ -85,13 +83,13 @@ const Page = () => {
                         />
                       </svg>
                     </div>
-                    <h2 className="text-3xl font-bold text-white ml-6">Admin Panel</h2>
+                    <h2 className="text-3xl font-bold text-gray-900 ml-6">Admin Panel</h2>
                   </div>
-                  <p className="text-blue-100 mb-8 text-lg leading-relaxed">
+                  <p className="text-gray-600 mb-8 text-lg leading-relaxed">
                     Manage users, permissions, and system settings. Access advanced administrative controls with full
                     oversight capabilities.
                   </p>
-                  <div className="flex items-center text-blue-300 font-semibold text-lg group-hover:text-blue-200 transition-colors">
+                  <div className="flex items-center text-gray-600 font-semibold text-lg group-hover:text-[#e00885] transition-colors">
                     <span>Access Dashboard</span>
                     <svg
                       className="w-6 h-6 ml-3 group-hover:translate-x-1 transition-transform"
@@ -106,12 +104,12 @@ const Page = () => {
               </div>
 
               <div
-                className="group bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl shadow-2xl overflow-hidden hover:shadow-green-500/25 hover:shadow-2xl transition-all duration-500 cursor-pointer transform hover:-translate-y-2 hover:bg-white/15"
+                className="group bg-white border border-[#e00885]/20 rounded-3xl shadow-2xl overflow-hidden hover:shadow-[#3c2a98]/25 hover:shadow-2xl transition-all duration-500 cursor-pointer transform hover:-translate-y-2 hover:bg-white"
                 onClick={() => handleNavigation("/product_upload")}
               >
                 <div className="p-10">
                   <div className="flex items-center mb-8">
-                    <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <div className="w-16 h-16 bg-gradient-to-br from-[#e00885] to-[#3c2a98] rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                       <svg className="w-9 h-9 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path
                           strokeLinecap="round"
@@ -121,12 +119,12 @@ const Page = () => {
                         />
                       </svg>
                     </div>
-                    <h2 className="text-3xl font-bold text-white ml-6">Product Upload</h2>
+                    <h2 className="text-3xl font-bold text-gray-900 ml-6">Product Upload</h2>
                   </div>
-                  <p className="text-blue-100 mb-8 text-lg leading-relaxed">
+                  <p className="text-gray-600 mb-8 text-lg leading-relaxed">
                     Upload new products, manage inventory, and update product information with streamlined workflows.
                   </p>
-                  <div className="flex items-center text-blue-300 font-semibold text-lg group-hover:text-blue-200 transition-colors">
+                  <div className="flex items-center text-gray-600 font-semibold text-lg group-hover:text-[#e00885] transition-colors">
                     <span>Upload Products</span>
                     <svg
                       className="w-6 h-6 ml-3 group-hover:translate-x-1 transition-transform"
@@ -142,19 +140,16 @@ const Page = () => {
             </div>
           ) : (
             <div className="max-w-3xl mx-auto text-center">
-              <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl shadow-2xl p-12">
-                <div className="w-20 h-20 bg-gradient-to-br from-blue-400 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-lg">
-                  <svg className="h-10 w-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                    />
-                  </svg>
+              <div className="bg-white border border-[#e00885]/20 rounded-3xl shadow-2xl p-12">
+                <div className="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-lg">
+                  <img 
+                    src="/logo.jpeg" 
+                    alt="Kartikay Signage Logo" 
+                    className="w-full h-full object-contain rounded-2xl"
+                  />
                 </div>
-                <h3 className="text-3xl font-bold text-white mb-6">Admin Access Required</h3>
-                <p className="text-xl text-blue-100 leading-relaxed">
+                <h3 className="text-3xl font-bold text-gray-900 mb-6">Admin Access Required</h3>
+                <p className="text-xl text-gray-600 leading-relaxed">
                   Please sign in to access the admin dashboard and manage your signage products and users with our
                   comprehensive management tools.
                 </p>

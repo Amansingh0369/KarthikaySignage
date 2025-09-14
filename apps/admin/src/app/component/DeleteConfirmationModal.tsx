@@ -24,7 +24,7 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = ({
       ></div>
       
       {/* Modal content */}
-      <div className="relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-2xl max-w-md w-full mx-4 border border-white/10 z-10">
+      <div className="relative bg-gradient-to-br from-[#1e1b4b] to-[#0c0a2d] rounded-2xl shadow-2xl max-w-md w-full mx-4 border border-white/10 z-10">
         {/* Modal header */}
         <div className="p-6 border-b border-white/10">
           <div className="flex items-center">
@@ -37,14 +37,14 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = ({
             </div>
             <div className="ml-4">
               <h3 className="text-lg font-medium text-white">Confirm Deletion</h3>
-              <p className="text-sm text-blue-200">This action cannot be undone</p>
+              <p className="text-sm text-[#e6e0f0]">This action cannot be undone</p>
             </div>
           </div>
         </div>
         
         {/* Modal body */}
         <div className="p-6">
-          <p className="text-blue-100">
+          <p className="text-[#e6e0f0]">
             Are you sure you want to delete <span className="font-medium text-white">{adminName}</span>? 
             This will permanently remove all associated data and cannot be undone.
           </p>
@@ -56,7 +56,7 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = ({
             type="button"
             onClick={onCancel}
             disabled={isDeleting}
-            className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white font-medium rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="px-4 py-2 bg-[#3c2a98]/50 hover:bg-[#3c2a98]/70 text-white font-medium rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#e00885] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             Cancel
           </button>
@@ -64,7 +64,7 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = ({
             type="button"
             onClick={onConfirm}
             disabled={isDeleting}
-            className="px-4 py-2 bg-red-600 hover:bg-red-700 disabled:bg-red-500/50 text-white font-medium rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:cursor-not-allowed flex items-center justify-center transition-colors"
+            className="px-4 py-2 bg-[#e00885] hover:bg-[#e00885] disabled:bg-[#e00885]/50 text-white font-medium rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#e00885] focus:ring-offset-2 disabled:cursor-not-allowed flex items-center justify-center transition-colors"
           >
             {isDeleting ? (
               <>

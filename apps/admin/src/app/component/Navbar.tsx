@@ -24,7 +24,7 @@ const NavbarContent = () => {
 
   if (status === "loading") {
     return (
-      <nav className="bg-gradient-to-r from-slate-50 to-blue-50 backdrop-blur-sm border-b border-slate-200/60 sticky top-0 z-50">
+      <nav className="bg-gradient-to-r from-white via-[#f9f3fa] to-[#e6e0f0] backdrop-blur-sm border-b border-[#e00885]/30 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-5">
             <div className="animate-pulse flex items-center space-x-3">
@@ -38,16 +38,20 @@ const NavbarContent = () => {
   }
 
   return (
-    <nav className="bg-gradient-to-r from-white via-slate-50 to-blue-50 backdrop-blur-sm border-b border-slate-200/60 sticky top-0 z-50">
+    <nav className="bg-gradient-to-r from-white via-[#f9f3fa] to-[#e6e0f0] backdrop-blur-sm border-b border-[#e00885]/30 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-5">
           {/* Logo and Company Name */}
           <div className="flex items-center space-x-3 cursor-pointer group" onClick={() => router.push("/")}>
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-700 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
-              <span className="text-white font-bold text-lg">KS</span>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+              <img 
+                src="/logo.jpeg" 
+                alt="Kartikay Signage Logo" 
+                className="w-full h-full object-contain rounded-xl"
+              />
             </div>
             <div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-slate-800 to-blue-700 bg-clip-text text-transparent">
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-[#e00885] to-[#3c2a98] bg-clip-text text-transparent">
                 Kartikay Signage
               </h1>
             </div>
@@ -58,14 +62,14 @@ const NavbarContent = () => {
             {session ? (
               <button
                 onClick={handleSignOut}
-                className="inline-flex items-center px-5 py-2.5 border border-slate-300 text-sm font-medium rounded-xl text-slate-700 bg-white/80 hover:bg-slate-50 hover:border-slate-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 shadow-sm hover:shadow-md"
+                className="inline-flex items-center px-5 py-2.5 border border-[#3c2a98] text-sm font-medium rounded-xl text-[#3c2a98] bg-white/80 hover:bg-[#3c2a98]/10 hover:border-[#3c2a98] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#e00885] transition-all duration-200 shadow-sm hover:shadow-md"
               >
                 Logout
               </button>
             ) : (
               <button
                 onClick={handleSignIn}
-                className="inline-flex items-center px-6 py-2.5 border border-transparent text-sm font-medium rounded-xl shadow-lg text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 hover:shadow-xl hover:scale-105"
+                className="inline-flex items-center px-6 py-2.5 border border-transparent text-sm font-medium rounded-xl shadow-lg text-white bg-gradient-to-r from-[#e00885] to-[#e00885] hover:from-[#e00885] hover:to-[#e00885] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#e00885] transition-all duration-200 hover:shadow-xl hover:scale-105"
               >
                 Login
               </button>
@@ -75,7 +79,7 @@ const NavbarContent = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 text-slate-600 hover:text-blue-700 hover:bg-blue-50/80 rounded-lg focus:outline-none transition-all duration-200"
+            className="md:hidden p-2 text-[#3c2a98] hover:text-[#e00885] hover:bg-[#e00885]/10 rounded-lg focus:outline-none transition-all duration-200"
           >
             <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               {isMenuOpen ? (
@@ -89,25 +93,25 @@ const NavbarContent = () => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden py-6 border-t border-slate-200/60 bg-white/80 backdrop-blur-sm rounded-b-2xl shadow-lg">
+          <div className="md:hidden py-6 border-t border-[#e00885]/30 bg-white/80 backdrop-blur-sm rounded-b-2xl shadow-lg">
             <div className="flex flex-col space-y-2">
               {session && (
                 <>
                   <button
                     onClick={() => navigateTo("/")}
-                    className="text-left px-4 py-3 text-slate-700 hover:text-blue-700 hover:bg-blue-50/80 font-medium transition-all duration-200 rounded-lg mx-2"
+                    className="text-left px-4 py-3 text-[#3c2a98] hover:text-[#e00885] hover:bg-[#e00885]/10 font-medium transition-all duration-200 rounded-lg mx-2"
                   >
                     Dashboard
                   </button>
                   <button
                     onClick={() => navigateTo("/super_admin")}
-                    className="text-left px-4 py-3 text-slate-700 hover:text-blue-700 hover:bg-blue-50/80 font-medium transition-all duration-200 rounded-lg mx-2"
+                    className="text-left px-4 py-3 text-[#3c2a98] hover:text-[#e00885] hover:bg-[#e00885]/10 font-medium transition-all duration-200 rounded-lg mx-2"
                   >
                     User Management
                   </button>
                   <button
                     onClick={() => navigateTo("/product_upload")}
-                    className="text-left px-4 py-3 text-slate-700 hover:text-blue-700 hover:bg-blue-50/80 font-medium transition-all duration-200 rounded-lg mx-2"
+                    className="text-left px-4 py-3 text-[#3c2a98] hover:text-[#e00885] hover:bg-[#e00885]/10 font-medium transition-all duration-200 rounded-lg mx-2"
                   >
                     Product Upload
                   </button>
@@ -116,9 +120,9 @@ const NavbarContent = () => {
 
               {session ? (
                 <div className="pt-4 mt-4 border-t border-slate-200/60 mx-2">
-                  <div className="flex items-center space-x-3 mb-4 p-3 bg-slate-50/80 rounded-xl">
+                  <div className="flex items-center space-x-3 mb-4 p-3 bg-[#f9f3fa]/80 rounded-xl">
                     <img
-                      className="w-10 h-10 rounded-full ring-2 ring-blue-200 shadow-sm"
+                      className="w-10 h-10 rounded-full ring-2 ring-[#e00885]/30 shadow-sm"
                       src={session.user?.image || "https://via.placeholder.com/40"}
                       alt={session.user?.name || "User"}
                     />
@@ -129,7 +133,7 @@ const NavbarContent = () => {
                   </div>
                   <button
                     onClick={handleSignOut}
-                    className="w-full inline-flex justify-center items-center px-4 py-3 border border-slate-300 text-sm font-medium rounded-xl text-slate-700 bg-white hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 shadow-sm"
+                    className="w-full inline-flex justify-center items-center px-4 py-3 border border-[#3c2a98] text-sm font-medium rounded-xl text-[#3c2a98] bg-white hover:bg-[#3c2a98]/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#e00885] transition-all duration-200 shadow-sm"
                   >
                     Logout
                   </button>
@@ -138,7 +142,7 @@ const NavbarContent = () => {
                 <div className="mx-2 mt-4">
                   <button
                     onClick={handleSignIn}
-                    className="w-full inline-flex items-center justify-center px-6 py-3 border border-transparent text-sm font-medium rounded-xl shadow-lg text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200"
+                    className="w-full inline-flex items-center justify-center px-6 py-3 border border-transparent text-sm font-medium rounded-xl shadow-lg text-white bg-gradient-to-r from-[#e00885] to-[#e00885] hover:from-[#e00885] hover:to-[#e00885] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#e00885] transition-all duration-200"
                   >
                     Login
                   </button>

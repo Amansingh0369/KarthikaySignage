@@ -32,7 +32,7 @@ const Sidebar = () => {
     <>
       {/* Sidebar */}
       <div 
-        className={`fixed inset-y-0 left-0 z-40 bg-gradient-to-b from-slate-900 to-slate-800 text-white h-full transform transition-all duration-300 ease-in-out ${
+        className={`fixed inset-y-0 left-0 z-40 bg-gradient-to-b from-[#3c2a98] to-black text-white h-full transform transition-all duration-300 ease-in-out ${
           isExpanded ? 'w-64' : 'w-20'
         }`}
         onMouseEnter={() => setIsExpanded(true)}
@@ -46,7 +46,7 @@ const Sidebar = () => {
                 <button
                   key={item.name}
                   onClick={() => navigateTo(item.path)}
-                  className="flex items-center w-full px-4 py-3 text-sm font-medium rounded-lg hover:bg-slate-700/50 transition-colors"
+                  className="flex items-center w-full px-4 py-3 text-sm font-medium rounded-lg hover:bg-[#e00885]/20 transition-colors"
                 >
                   <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} />
@@ -60,24 +60,24 @@ const Sidebar = () => {
           </div>
 
           {/* User profile and logout */}
-          <div className="p-4 border-t border-slate-700">
+          <div className="p-4 border-t border-[#e00885]/30">
             <div className="flex items-center space-x-3 mb-4">
               <img
-                className="w-10 h-10 rounded-full ring-2 ring-blue-500 flex-shrink-0"
+                className="w-10 h-10 rounded-full ring-2 ring-[#e00885] flex-shrink-0"
                 src={session.user?.image || "https://via.placeholder.com/40"}
                 alt={session.user?.name || "User"}
               />
               <div className={`overflow-hidden transition-opacity duration-200 ${isExpanded ? 'opacity-100' : 'opacity-0 w-0 h-0'}`}>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium truncate">{session.user?.name}</p>
-                  <p className="text-xs text-slate-400 truncate">{session.user?.email}</p>
+                  <p className="text-xs text-[#e6e0f0] truncate">{session.user?.email}</p>
                 </div>
               </div>
             </div>
             <div className={`overflow-hidden transition-opacity duration-200 ${isExpanded ? 'opacity-100' : 'opacity-0 w-0 h-0'}`}>
               <button
                 onClick={handleSignOut}
-                className="w-full flex items-center justify-center px-4 py-2 border border-slate-600 text-sm font-medium rounded-lg text-white bg-slate-800 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+                className="w-full flex items-center justify-center px-4 py-2 border border-[#e00885]/30 text-sm font-medium rounded-lg text-white bg-[#3c2a98] hover:bg-[#e00885] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#e00885] transition-colors"
               >
                 Logout
               </button>

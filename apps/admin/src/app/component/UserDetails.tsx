@@ -38,8 +38,8 @@ const UserDetails: React.FC<UserDetailsProps> = ({ admins, loading = false, onUs
   if (loading) {
     return (
       <div className="flex justify-center items-center py-8">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-400"></div>
-        <span className="ml-2 text-blue-100">Loading users...</span>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#e00885]"></div>
+        <span className="ml-2">Loading users...</span>
       </div>
     );
   }
@@ -60,63 +60,63 @@ const UserDetails: React.FC<UserDetailsProps> = ({ admins, loading = false, onUs
   if (admins.length === 0) {
     return (
       <div className="text-center py-8">
-        <div className="text-blue-100 mb-2">
-          <svg className="mx-auto h-12 w-12 text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div className="mb-2">
+          <svg className="mx-auto h-12 w-12 text-[#3c2a98]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-2.239" />
           </svg>
         </div>
         <h3 className="text-lg font-medium text-white mb-1">No users found</h3>
-        <p className="text-blue-100">Get started by adding your first user.</p>
+        <p>Get started by adding your first user.</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white/5 backdrop-blur-sm rounded-lg overflow-hidden">
+    <div className="bg-white/5 backdrop-blur-sm  rounded-lg overflow-hidden">
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-white/10">
-          <thead className="bg-white/5">
+          <thead className="bg-black/5">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-blue-100 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                 User
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-blue-100 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                 Role
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-blue-100 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                 Access Permissions
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-blue-100 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                 Created At
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-blue-100 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                 Actions
               </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-white/10">
             {admins.map((admin) => (
-              <tr key={admin.id} className="hover:bg-white/5 transition-colors">
+              <tr key={admin.id} className="hover:bg-[#222222]/10 transition-colors">
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
                     <div className="flex-shrink-0 h-10 w-10">
-                      <div className="h-10 w-10 rounded-full bg-gradient-to-br from-blue-400 to-indigo-600 flex items-center justify-center">
+                      <div className="h-10 w-10 rounded-full bg-gradient-to-br from-[#e00885] to-[#3c2a98] flex items-center justify-center">
                         <span className="text-white font-medium text-sm">
                           {admin.name.charAt(0).toUpperCase()}
                         </span>
                       </div>
                     </div>
                     <div className="ml-4">
-                      <div className="text-sm font-medium text-white">{admin.name}</div>
-                      <div className="text-sm text-blue-200">{admin.email}</div>
+                      <div className="text-sm font-medium">{admin.name}</div>
+                      <div className="text-sm">{admin.email}</div>
                     </div>
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
                     admin.role === 'SUPER_ADMIN' 
-                      ? 'bg-purple-500/20 text-purple-200 border border-purple-400/30' 
-                      : 'bg-blue-500/20 text-blue-200 border border-blue-400/30'
+                      ? 'bg-[#3c2a98]/20 text-[#3c2a98] border border-[#3c2a98]/30' 
+                      : 'bg-[#e00885]/20 text-[#e00885] border border-[#e00885]/30'
                   }`}>
                     {admin.role.replace('_', ' ')}
                   </span>
@@ -126,14 +126,14 @@ const UserDetails: React.FC<UserDetailsProps> = ({ admins, loading = false, onUs
                     {admin.access.map((permission, index) => (
                       <span
                         key={index}
-                        className="inline-flex px-2 py-1 text-xs font-medium bg-green-500/20 text-green-200 rounded-md border border-green-400/30"
+                        className="inline-flex px-2 py-1 text-xs font-medium bg-[#10b981]/20 text-[#10b981] rounded-md border border-[#10b981]/30"
                       >
                         {permission.replace('_', ' ')}
                       </span>
                     ))}
                   </div>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-200">
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
                   {admin.createdAt ? new Date(admin.createdAt).toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: 'short',
@@ -145,13 +145,13 @@ const UserDetails: React.FC<UserDetailsProps> = ({ admins, loading = false, onUs
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <button 
                     onClick={() => handleEditClick(admin)}
-                    className="text-blue-300 hover:text-blue-100 mr-3 transition-colors"
+                    className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded mr-3 transition-colors"
                   >
                     Edit
                   </button>
                   <button 
-                    onClick={() => onDeleteUser(admin)} // Changed to call prop function
-                    className="text-red-300 hover:text-red-100 transition-colors"
+                    onClick={() => onDeleteUser(admin)}
+                    className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded transition-colors"
                   >
                     Delete
                   </button>
