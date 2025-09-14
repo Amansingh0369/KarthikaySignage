@@ -90,17 +90,17 @@ const SuperAdmin = () => {
 
   if (!session) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#3c2a98] via-[#2a1e6b] to-black">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-400 mx-auto mb-4"></div>
-          <p className="text-blue-100">Loading...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#e00885] mx-auto mb-4"></div>
+          <p className="text-[#e6e0f0]">Loading...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-[#3c2a98] via-[#2a1e6b] to-black relative overflow-hidden">
       <div className="absolute inset-0 opacity-10">
         <div
           className="absolute inset-0"
@@ -122,12 +122,12 @@ const SuperAdmin = () => {
         <div className="flex justify-between items-center mb-8">
           <div>
             <h2 className="text-3xl font-bold text-white mb-2">User Management</h2>
-            <p className="text-blue-100">Manage users and their access permissions</p>
+            <p className="text-[#e6e0f0]">Manage users and their access permissions</p>
           </div>
           
           <button
             onClick={openPopup}
-            className="inline-flex items-center px-6 py-3 bg-white/10 backdrop-blur-lg border border-white/20 text-white font-medium rounded-lg shadow-lg hover:bg-white/20 hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="inline-flex items-center px-6 py-3 bg-[#e00885]/20 backdrop-blur-lg border border-[#e00885]/30 text-white font-medium rounded-lg shadow-lg hover:bg-[#e00885]/30 hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#e00885] focus:ring-offset-2"
           >
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -138,20 +138,20 @@ const SuperAdmin = () => {
 
         {/* Error Message */}
         {error && (
-          <div className="mb-6 bg-red-500/20 backdrop-blur-lg border border-red-400/30 rounded-lg p-4">
+          <div className="mb-6 bg-[#e00885]/20 backdrop-blur-lg border border-[#e00885]/30 rounded-lg p-4">
             <div className="flex">
               <div className="flex-shrink-0">
-                <svg className="h-5 w-5 text-red-300" viewBox="0 0 20 20" fill="currentColor">
+                <svg className="h-5 w-5 text-[#fce7f3]" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                 </svg>
               </div>
               <div className="ml-3">
-                <p className="text-sm text-red-100">{error}</p>
+                <p className="text-sm text-[#fce7f3]">{error}</p>
               </div>
               <div className="ml-auto pl-3">
                 <button
                   onClick={() => setError(null)}
-                  className="inline-flex text-red-200 hover:text-red-100"
+                  className="inline-flex text-[#fce7f3] hover:text-[#e00885]"
                 >
                   <span className="sr-only">Dismiss</span>
                   <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -164,7 +164,7 @@ const SuperAdmin = () => {
         )}
 
         {/* Users Table */}
-        <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-xl overflow-hidden">
+        <div className="bg-[#3c2a98]/30 backdrop-blur-lg border border-[#e00885]/30 rounded-2xl shadow-xl overflow-hidden">
           <UserDetails 
             admins={admins} 
             loading={loading} 
