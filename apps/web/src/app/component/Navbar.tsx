@@ -3,6 +3,7 @@
 import { useSession, signIn, signOut, SessionProvider } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
+import { SITE_INFO } from "../constants";
 
 const NavbarContent = () => {
   const { data: session, status } = useSession()
@@ -33,12 +34,24 @@ const NavbarContent = () => {
             </div>
           </div>
         </div>
+        
+        {/* Live Status Bar */}
+        <div className="bg-gradient-to-r from-[#e00885] to-[#3c2a98] py-2 px-4 sm:px-6 lg:px-8 border-b border-[#e00885]/30">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex items-center justify-center">
+              <div className="flex items-center">
+                <div className="w-3 h-3 bg-[#e00885] rounded-full mr-2"></div>
+                <span className="text-white text-sm font-medium">{SITE_INFO.liveMessage}</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </nav>
     )
   }
 
   return (
-    <nav className="bg-gradient-to-r from-white via-[#f9f3fa] to-[#e6e0f0] backdrop-blur-sm border-b border-[#e00885]/30 sticky top-0 z-50">
+    <nav className="bg-gradient-to-r from-white via-[#f9f3fa] to-[#e6e0f0] backdrop-blur-sm  sticky top-0 z-50">
       <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-5">
           {/* Logo and Company Name */}
@@ -151,6 +164,18 @@ const NavbarContent = () => {
             </div>
           </div>
         )}
+      </div>
+      
+      {/* Live Status Bar */}
+      <div className="bg-gradient-to-r from-[#e00885] to-[#3c2a98] py-2 px-4 sm:px-6 lg:px-8 ">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center justify-center">
+            <div className="flex items-center">
+              <div className="w-3 h-3 bg-[#e00885] rounded-full mr-2"></div>
+              <span className="text-white text-sm font-medium">{SITE_INFO.liveMessage}</span>
+            </div>
+          </div>
+        </div>
       </div>
     </nav>
   )

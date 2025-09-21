@@ -118,7 +118,7 @@ const SuperAdmin = () => {
       
       {/* Main Content */}
       <div className="relative z-10 ml-20 pt-10 flex justify-center items-start">
-        <div className="max-w-7xl w-full px-4 sm:px-6 lg:px-8 py-8">
+        <div className="max-w-8xl w-full px-4 sm:px-6 lg:px-8 py-8">
           {/* Header with Add Button */}
           <div className="flex justify-between items-center mb-8">
             <div>
