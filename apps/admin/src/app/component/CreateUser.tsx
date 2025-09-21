@@ -154,15 +154,15 @@ const UserDetails: React.FC<UserDetailsProps> = ({ onSuccess }) => {
   return (
     <div className="w-full">
       {submitSuccess && (
-        <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-md">
+        <div className="mb-6 p-4 bg-[#10b981]/20 border border-[#10b981]/30 rounded-md">
           <div className="flex">
             <div className="flex-shrink-0">
-              <svg className="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+              <svg className="h-5 w-5 text-[#10b981]" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
             </div>
             <div className="ml-3">
-              <p className="text-sm font-medium text-green-800">
+              <p className="text-sm font-medium text-[#10b981]">
                 User details saved successfully!
               </p>
             </div>
@@ -184,13 +184,13 @@ const UserDetails: React.FC<UserDetailsProps> = ({ onSuccess }) => {
               name="name"
               value={formData.name}
               onChange={handleInputChange}
-              className={`w-full px-4 py-3 border rounded-lg shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                errors.name ? 'border-red-300 bg-red-50' : 'border-gray-300 hover:border-gray-400'
+              className={`w-full px-4 py-3 border rounded-lg shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-[#e00885] focus:border-transparent ${
+                errors.name ? 'border-[#e00885] bg-[#fce7f3]' : 'border-gray-300 hover:border-gray-400'
               }`}
               placeholder="Enter full name"
             />
             {errors.name && (
-              <p className="mt-1 text-sm text-red-600 flex items-center">
+              <p className="mt-1 text-sm text-[#e00885] flex items-center">
                 <svg className="h-4 w-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                 </svg>
@@ -210,13 +210,13 @@ const UserDetails: React.FC<UserDetailsProps> = ({ onSuccess }) => {
               name="email"
               value={formData.email}
               onChange={handleInputChange}
-              className={`w-full px-4 py-3 border rounded-lg shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                errors.email ? 'border-red-300 bg-red-50' : 'border-gray-300 hover:border-gray-400'
+              className={`w-full px-4 py-3 border rounded-lg shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-[#e00885] focus:border-transparent ${
+                errors.email ? 'border-[#e00885] bg-[#fce7f3]' : 'border-gray-300 hover:border-gray-400'
               }`}
               placeholder="Enter email address"
             />
             {errors.email && (
-              <p className="mt-1 text-sm text-red-600 flex items-center">
+              <p className="mt-1 text-sm text-[#e00885] flex items-center">
                 <svg className="h-4 w-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                 </svg>
@@ -238,7 +238,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({ onSuccess }) => {
               name="role"
               value={formData.role}
               onChange={handleInputChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-400 transition-colors bg-white"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#e00885] focus:border-transparent hover:border-gray-400 transition-colors bg-white"
             >
               <option value="ADMIN">Admin - Standard administrative access</option>
               <option value="SUPER_ADMIN">Super Admin - Complete system control</option>
@@ -258,7 +258,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({ onSuccess }) => {
                     id={option.value}
                     checked={formData.access.includes(option.value)}
                     onChange={() => handleAccessChange(option.value)}
-                    className="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    className="mt-1 h-4 w-4 text-[#e00885] focus:ring-[#e00885] border-gray-300 rounded"
                   />
                   <label htmlFor={option.value} className="ml-2 cursor-pointer">
                     <span className="block text-sm font-medium text-gray-700">{option.label}</span>
@@ -268,7 +268,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({ onSuccess }) => {
               ))}
             </div>
             {errors.access && (
-              <p className="mt-2 text-sm text-red-600 flex items-center">
+              <p className="mt-2 text-sm text-[#e00885] flex items-center">
                 <svg className="h-4 w-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                 </svg>
@@ -283,7 +283,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({ onSuccess }) => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium py-3 px-6 rounded-lg shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:cursor-not-allowed flex items-center justify-center"
+            className="flex-1 bg-[#e00885] hover:bg-[#e00885] disabled:bg-[#e00885]/50 text-white font-medium py-3 px-6 rounded-lg shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-[#e00885] focus:ring-offset-2 disabled:cursor-not-allowed flex items-center justify-center"
           >
             {isSubmitting ? (
               <>
@@ -301,7 +301,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({ onSuccess }) => {
             type="button"
             onClick={handleReset}
             disabled={isSubmitting}
-            className="px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-lg shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="px-6 py-3 border border-[#3c2a98] text-[#3c2a98] font-medium rounded-lg shadow-sm hover:bg-[#3c2a98]/10 focus:outline-none focus:ring-2 focus:ring-[#e00885] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             Reset
           </button>
