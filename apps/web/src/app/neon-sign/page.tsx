@@ -7,6 +7,7 @@ import Image from "next/image";
 import { SITE_INFO } from "../constants";
 import { useState } from "react";
 import { calculateNeonSignPrice, calculateFinalDimensions } from "./functions/priceCalculator";
+import PreMadeNeonSigns from "../component/PreMadeNeonSigns";
 
 const NeonSignPage = () => {
   const { data: session } = useSession();
@@ -139,8 +140,11 @@ const NeonSignPage = () => {
           </div>
         </section>
 
+        {/* Pre-Made Neon Signs Section */}
+        <PreMadeNeonSigns />
+
         {/* Customization Section */}
-        <section className="py-16 px-4 sm:px-6 lg:px-8 bg-black">
+        <section id="customization-section" className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-900">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">

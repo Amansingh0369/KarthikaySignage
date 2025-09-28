@@ -16,7 +16,7 @@ const CategorySection = () => {
     {
       id: "neon-sign",
       name: "Neon Sign",
-      image: "/brand.png", // Using existing brand image as placeholder
+      image: "/neonsign.png", // Using existing brand image as placeholder
       description: "Custom neon signs for your business",
       route: "/neon-sign", // Adding route for neon sign page
     },
