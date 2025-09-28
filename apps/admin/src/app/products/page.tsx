@@ -15,6 +15,7 @@ interface NeonSign {
   discountType: string | null;
   discountValue: number | null;
   isActive: boolean;
+  type: string; // Add type field
 }
 
 interface Product {
@@ -46,6 +47,7 @@ const ProductsPage = () => {
     basePrice: '',
     discountType: '',
     discountValue: '',
+    type: 'DEFAULT', // Add type field with default value
   });
   const [isUpdating, setIsUpdating] = useState(false);
 
@@ -96,6 +98,7 @@ const ProductsPage = () => {
         basePrice: neonSign.basePrice.toString(),
         discountType: neonSign.discountType || '',
         discountValue: neonSign.discountValue?.toString() || '',
+        type: neonSign.type || 'DEFAULT', // Add type field
       });
     } else {
       setEditFormData({
@@ -106,6 +109,7 @@ const ProductsPage = () => {
         basePrice: '',
         discountType: '',
         discountValue: '',
+        type: 'DEFAULT', // Add type field with default value
       });
     }
     setShowEditModal(true);
@@ -143,6 +147,7 @@ const ProductsPage = () => {
       basePrice: '',
       discountType: '',
       discountValue: '',
+      type: '',
     });
   };
 
@@ -412,6 +417,22 @@ const ProductsPage = () => {
                       onChange={(e) => setEditFormData({...editFormData, description: e.target.value})}
                       className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-3 border"
                     />
+                  </div>
+
+                  {/* Neon Sign Type */}
+                  <div className="sm:col-span-2">
+                    <label htmlFor="editType" className="block text-sm font-medium text-gray-700 mb-1">
+                      Neon Sign Type
+                    </label>
+                    <select
+                      id="editType"
+                      value={editFormData.type}
+                      onChange={(e) => setEditFormData({...editFormData, type: e.target.value})}
+                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-3 border"
+                    >
+                      <option value="DEFAULT">Default</option>
+                      <option value="CUSTOM">Custom</option>
+                    </select>
                   </div>
 
                   {/* Minimum Width */}

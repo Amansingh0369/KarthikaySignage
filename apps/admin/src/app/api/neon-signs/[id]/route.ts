@@ -12,11 +12,12 @@ export async function PUT(
     const { 
       name, 
       description, 
+      type, 
       minWidthFeet, 
       minHeightFeet, 
       basePrice, 
       discountType, 
-      discountValue 
+      discountValue,
     } = body;
 
     const productId = params.id;
@@ -43,6 +44,7 @@ export async function PUT(
         basePrice: parseFloat(basePrice),
         discountType: discountType || null,
         discountValue: discountValue ? parseFloat(discountValue) : null,
+        type: type || "DEFAULT", 
       },
     });
 
