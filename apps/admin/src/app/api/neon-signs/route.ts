@@ -4,11 +4,23 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function POST(request: NextRequest) {
+  // Check if the request is for file upload by examining the content type
+  const contentType = request.headers.get('content-type') || '';
+  
+  if (contentType.includes('multipart/form-data')) {
+    // Handle multipart form data for file uploads
+    // For now, we'll keep the existing implementation for JSON data
+    // In a real implementation, you would parse the multipart data here
+    // This is where you would integrate with formidable or similar library
+  }
+  
   try {
     const body = await request.json();
     const { 
       name, 
       description, 
+      type, // Add the type field
+      imageUrl, // Add the imageUrl field
       minWidthFeet, 
       minHeightFeet, 
       basePrice, 
@@ -39,6 +51,8 @@ export async function POST(request: NextRequest) {
         basePrice: parseFloat(basePrice),
         discountType: discountType || null,
         discountValue: discountValue ? parseFloat(discountValue) : null,
+        type: type || "DEFAULT", // Add the type field with default value
+        imageUrl: imageUrl || null, // Add the imageUrl field
         isActive: true,
       },
     });
@@ -57,33 +71,4 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function GET(request: NextRequest) {
-  try {
-    const neonSigns = await prisma.product.findMany({
-      where: { category: "NEON_SIGN" },
-      include: {
-        neonSigns: true,
-        _count: {
-          select: {
-            orderItems: true,
-            reviews: true,
-          },
-        },
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
-
-    return NextResponse.json({
-      success: true,
-      neonSigns,
-    });
-  } catch (error) {
-    console.error("Error fetching neon signs:", error);
-    return NextResponse.json(
-      { success: false, error: "Failed to fetch neon signs" },
-      { status: 500 }
-    );
-  }
-}
+// ... existing GET function ...

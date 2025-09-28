@@ -156,6 +156,12 @@ model NeonSign {
   discountType DiscountType? // PERCENTAGE or FIXED_AMOUNT
   discountValue Float?       // Discount percentage (0-100) or fixed amount
   
+  // Neon sign type
+  type        NeonSignType  @default(DEFAULT)
+  
+  // Image for the neon sign
+  imageUrl    String?   // URL to the image stored in S3 bucket
+  
   isActive    Boolean   @default(true)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
@@ -387,3 +393,9 @@ enum ProductCategory {
   NEON_SIGN
   VISITING_CARD
 }
+
+enum NeonSignType {
+  DEFAULT
+  CUSTOM
+}
+

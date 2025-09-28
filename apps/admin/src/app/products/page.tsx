@@ -16,6 +16,7 @@ interface NeonSign {
   discountValue: number | null;
   isActive: boolean;
   type: string; // Add type field
+  imageUrl: string | null; // Add imageUrl field
 }
 
 interface Product {
@@ -48,7 +49,11 @@ const ProductsPage = () => {
     discountType: '',
     discountValue: '',
     type: 'DEFAULT', // Add type field with default value
+    imageUrl: '', // Add imageUrl field
   });
+  
+  // Add state for image file in edit form
+  const [editImageFile, setEditImageFile] = useState<File | null>(null);
   const [isUpdating, setIsUpdating] = useState(false);
 
   useEffect(() => {
@@ -99,6 +104,7 @@ const ProductsPage = () => {
         discountType: neonSign.discountType || '',
         discountValue: neonSign.discountValue?.toString() || '',
         type: neonSign.type || 'DEFAULT', // Add type field
+        imageUrl: neonSign.imageUrl || '', // Add imageUrl field
       });
     } else {
       setEditFormData({
@@ -110,8 +116,10 @@ const ProductsPage = () => {
         discountType: '',
         discountValue: '',
         type: 'DEFAULT', // Add type field with default value
+        imageUrl: '', // Add imageUrl field with default value
       });
     }
+    setEditImageFile(null); // Reset image file state
     setShowEditModal(true);
   };
 
@@ -121,13 +129,35 @@ const ProductsPage = () => {
 
     setIsUpdating(true);
     try {
-      const response = await axios.put(`/api/neon-signs/${editingProduct.id}`, editFormData);
+      // Prepare the form data
+      let formData = { ...editFormData };
+      
+      // If there's a file to upload, upload it to S3 first
+      if (editImageFile) {
+        const uploadFormData = new FormData();
+        uploadFormData.append('file', editImageFile);
+        
+        const uploadResponse = await fetch('/api/upload', {
+          method: 'POST',
+          body: uploadFormData,
+        });
+        
+        const uploadResult = await uploadResponse.json();
+        if (uploadResult.success) {
+          formData = { ...formData, imageUrl: uploadResult.imageUrl };
+        } else {
+          throw new Error(uploadResult.error || "Failed to upload image");
+        }
+      }
+      
+      const response = await axios.put(`/api/neon-signs/${editingProduct.id}`, formData);
       
       if (response.data.success) {
         // Refresh products list
         await fetchProducts();
         setShowEditModal(false);
         setEditingProduct(null);
+        setEditImageFile(null); // Reset image file state
       }
     } catch (error) {
       console.error("Error updating product:", error);
@@ -147,7 +177,8 @@ const ProductsPage = () => {
       basePrice: '',
       discountType: '',
       discountValue: '',
-      type: '',
+      type: 'DEFAULT', // Add type field with default value
+      imageUrl: '', // Add imageUrl field with default value
     });
   };
 
@@ -433,6 +464,38 @@ const ProductsPage = () => {
                       <option value="DEFAULT">Default</option>
                       <option value="CUSTOM">Custom</option>
                     </select>
+                  </div>
+
+                  {/* Image URL */}
+                  <div className="sm:col-span-2">
+                    <label htmlFor="editImageUrl" className="block text-sm font-medium text-gray-700 mb-1">
+                      Image
+                    </label>
+                    {/* File input for image upload */}
+                    <input
+                      type="file"
+                      id="editImageFile"
+                      accept="image/*"
+                      onChange={(e) => setEditImageFile(e.target.files?.[0] || null)}
+                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-3 border"
+                    />
+                    <p className="text-xs text-gray-500 mt-1">
+                      Select an image file to upload, or enter a URL below
+                    </p>
+                    
+                    {/* Manual URL input as fallback */}
+                    <input
+                      type="text"
+                      id="editImageUrl"
+                      value={editFormData.imageUrl}
+                      onChange={(e) => setEditFormData({...editFormData, imageUrl: e.target.value})}
+                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-3 border mt-2"
+                      placeholder="https://your-s3-bucket.s3.amazonaws.com/image.jpg"
+                      disabled={!!editImageFile} // Disable if file is selected
+                    />
+                    <p className="text-xs text-gray-500 mt-1">
+                      Or enter an existing image URL
+                    </p>
                   </div>
 
                   {/* Minimum Width */}

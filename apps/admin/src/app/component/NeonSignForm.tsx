@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
+// Add this import for the S3 upload function
+import { uploadFileToS3 } from '../lib/s3-upload';
+
 interface NeonSignFormProps {
   onUploadSuccess?: () => void;
   onBackToCategory: () => void;
@@ -18,15 +21,41 @@ const NeonSignForm: React.FC<NeonSignFormProps> = ({ onUploadSuccess, onBackToCa
   const [basePrice, setBasePrice] = useState("");
   const [discountType, setDiscountType] = useState("");
   const [discountValue, setDiscountValue] = useState("");
+  const [type, setType] = useState("DEFAULT"); // Add type field with default value
+  const [imageUrl, setImageUrl] = useState(""); // Add imageUrl field
+  const [imageFile, setImageFile] = useState<File | null>(null); // Add imageFile state
   const [isUploading, setIsUploading] = useState(false);
   const [uploadSuccess, setUploadSuccess] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null); // Add error state
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsUploading(true);
     setUploadSuccess(false);
+    setUploadError(null); // Clear previous errors
 
     try {
+      // If there's a file to upload, upload it to S3 first
+      let finalImageUrl = imageUrl;
+      if (imageFile) {
+        const formData = new FormData();
+        formData.append('file', imageFile);
+        
+        const uploadResponse = await fetch('/api/upload', {
+          method: 'POST',
+          body: formData,
+        });
+        
+        const uploadResult = await uploadResponse.json();
+        console.log("Upload result:", uploadResult);
+        
+        if (uploadResult.success) {
+          finalImageUrl = uploadResult.imageUrl;
+        } else {
+          throw new Error(uploadResult.error || "Failed to upload image");
+        }
+      }
+
       const response = await axios.post('/api/neon-signs', {
         name: productName,
         description: productDescription,
@@ -35,6 +64,8 @@ const NeonSignForm: React.FC<NeonSignFormProps> = ({ onUploadSuccess, onBackToCa
         basePrice: basePrice,
         discountType: discountType || null,
         discountValue: discountValue || null,
+        type: type, // Add type field
+        imageUrl: finalImageUrl, // Use the S3 URL or the manually entered URL
       });
       
       if (response.data.success) {
@@ -46,6 +77,9 @@ const NeonSignForm: React.FC<NeonSignFormProps> = ({ onUploadSuccess, onBackToCa
         setBasePrice("");
         setDiscountType("");
         setDiscountValue("");
+        setType("DEFAULT"); // Reset type field
+        setImageUrl(""); // Reset imageUrl field
+        setImageFile(null); // Reset imageFile field
         setUploadSuccess(true);
         
         // Notify parent component of success
@@ -59,9 +93,11 @@ const NeonSignForm: React.FC<NeonSignFormProps> = ({ onUploadSuccess, onBackToCa
         }, 2000);
       } else {
         console.error("Upload error:", response.data.error);
+        setUploadError(response.data.error || "Failed to create neon sign product");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Upload error:", error);
+      setUploadError(error.message || "An unexpected error occurred during upload");
     } finally {
       setIsUploading(false);
     }
@@ -70,6 +106,43 @@ const NeonSignForm: React.FC<NeonSignFormProps> = ({ onUploadSuccess, onBackToCa
   return (
     <div className="bg-white shadow rounded-lg">
       <div className="px-6 py-8">
+        {/* Display success or error messages */}
+        {uploadSuccess && (
+          <div className="mb-4 rounded-md bg-green-50 p-4">
+            <div className="flex">
+              <div className="flex-shrink-0">
+                <svg className="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <div className="ml-3">
+                <h3 className="text-sm font-medium text-green-800">Upload successful!</h3>
+                <div className="mt-2 text-sm text-green-700">
+                  <p>Your neon sign product has been created successfully.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        
+        {uploadError && (
+          <div className="mb-4 rounded-md bg-red-50 p-4">
+            <div className="flex">
+              <div className="flex-shrink-0">
+                <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <div className="ml-3">
+                <h3 className="text-sm font-medium text-red-800">Upload failed</h3>
+                <div className="mt-2 text-sm text-red-700">
+                  <p>{uploadError}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             {/* Product Name */}
@@ -102,6 +175,57 @@ const NeonSignForm: React.FC<NeonSignFormProps> = ({ onUploadSuccess, onBackToCa
                 placeholder="Describe the neon sign product..."
                 required
               />
+            </div>
+
+            {/* Neon Sign Type */}
+            <div className="sm:col-span-2">
+              <label htmlFor="type" className="block text-sm font-medium text-gray-700 mb-1">
+                Neon Sign Type
+              </label>
+              <select
+                id="type"
+                value={type}
+                onChange={(e) => setType(e.target.value)}
+                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-3 border"
+              >
+                <option value="DEFAULT">Default</option>
+                <option value="CUSTOM">Custom</option>
+              </select>
+              <p className="text-xs text-gray-500 mt-1">
+                Default signs are standard products, Custom signs are made-to-order
+              </p>
+            </div>
+
+            {/* Image URL */}
+            <div className="sm:col-span-2">
+              <label htmlFor="imageUrl" className="block text-sm font-medium text-gray-700 mb-1">
+                Image
+              </label>
+              {/* File input for image upload */}
+              <input
+                type="file"
+                id="imageFile"
+                accept="image/*"
+                onChange={(e) => setImageFile(e.target.files?.[0] || null)}
+                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-3 border"
+              />
+              <p className="text-xs text-gray-500 mt-1">
+                Select an image file to upload to S3, or enter a URL below
+              </p>
+              
+              {/* Manual URL input as fallback */}
+              <input
+                type="text"
+                id="imageUrl"
+                value={imageUrl}
+                onChange={(e) => setImageUrl(e.target.value)}
+                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-3 border mt-2"
+                placeholder="https://your-s3-bucket.s3.amazonaws.com/image.jpg"
+                disabled={!!imageFile} // Disable if file is selected
+              />
+              <p className="text-xs text-gray-500 mt-1">
+                Or enter an existing image URL
+              </p>
             </div>
 
             {/* Minimum Dimensions Section */}

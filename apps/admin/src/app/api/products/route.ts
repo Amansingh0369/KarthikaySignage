@@ -26,9 +26,24 @@ export async function GET(request: NextRequest) {
       },
     });
 
+    // Map products to include price from neonSigns
+    const productsWithPrice = products.map(product => {
+      // For NEON_SIGN products, get price from neonSigns
+      let price = 0;
+      if (product.category === "NEON_SIGN" && product.neonSigns.length > 0) {
+        // Use the basePrice from the first neonSign (you might want to adjust this logic)
+        price = product.neonSigns[0].basePrice;
+      }
+      
+      return {
+        ...product,
+        price: price || 0, // Default to 0 if no price found
+      };
+    });
+
     return NextResponse.json({
       success: true,
-      products,
+      products: productsWithPrice,
     });
   } catch (error) {
     console.error("Error fetching products:", error);

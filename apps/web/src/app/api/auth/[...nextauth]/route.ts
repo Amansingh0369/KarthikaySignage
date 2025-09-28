@@ -9,7 +9,7 @@ type SessionProps = {
     user: any;
 }
 
-export const authOptions = {
+const authOptions = {
     adapter: PrismaAdapter(prisma),
 
     providers: [
@@ -36,6 +36,6 @@ export const authOptions = {
     },
 }
 
-export const handler = NextAuth(authOptions);
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

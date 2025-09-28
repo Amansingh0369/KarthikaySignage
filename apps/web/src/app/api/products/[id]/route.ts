@@ -31,17 +31,21 @@ export async function GET(
       );
     }
 
-    // For NEON_SIGN products, get price from neonSigns
+    // For NEON_SIGN products, get price and image from neonSigns
     let price = 0;
+    let imageUrl = null;
     if (product.category === "NEON_SIGN" && product.neonSigns.length > 0) {
       // Use the basePrice from the first neonSign
       price = product.neonSigns[0].basePrice;
+      // Use the imageUrl from the first neonSign
+      imageUrl = product.neonSigns[0].imageUrl;
     }
 
-    // Return the product with the computed price
+    // Return the product with the computed price and image
     const productWithPrice = {
       ...product,
       price: price,
+      imageUrl: imageUrl, // Add imageUrl to the product object
     };
 
     return NextResponse.json({

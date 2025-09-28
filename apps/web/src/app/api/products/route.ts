@@ -24,18 +24,22 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    // Map products to include price from neonSigns
+    // Map products to include price and image from neonSigns
     const productsWithPrice = products.map(product => {
-      // For NEON_SIGN products, get price from neonSigns
+      // For NEON_SIGN products, get price and image from neonSigns
       let price = 0;
+      let imageUrl = null;
       if (product.category === "NEON_SIGN" && product.neonSigns.length > 0) {
-        // Use the basePrice from the first neonSign (you might want to adjust this logic)
+        // Use the basePrice from the first neonSign
         price = product.neonSigns[0].basePrice;
+        // Use the imageUrl from the first neonSign
+        imageUrl = product.neonSigns[0].imageUrl;
       }
       
       return {
         ...product,
         price: price || 0, // Default to 0 if no price found
+        imageUrl: imageUrl, // Add imageUrl to the product object
       };
     });
 

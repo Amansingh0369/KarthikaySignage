@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface ProductProps {
   id: string;
@@ -11,8 +11,9 @@ interface ProductProps {
   imageUrl?: string;
 }
 
-const Product = ({ id, name, description, category, price }: ProductProps) => {
+const Product = ({ id, name, description, category, price, imageUrl }: ProductProps) => {
   const [imageError, setImageError] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
   
   // Format price to INR
   const formatPrice = (price: number) => {
@@ -22,10 +23,27 @@ const Product = ({ id, name, description, category, price }: ProductProps) => {
     }).format(price);
   };
 
+  // Function to get image URL - handles both relative and absolute URLs
+  const getImageUrl = (imageUrl: string | undefined, id: string) => {
+    // If we have an image URL from S3, use it
+    if (imageUrl && imageUrl.startsWith('http')) {
+      return imageUrl;
+    }
+    
+    // Fallback to default image
+    return `/product-${id}.jpg`;
+  };
+
+  // Reset image error state when imageUrl changes
+  useEffect(() => {
+    setImageError(false);
+    setImageLoaded(false);
+  }, [imageUrl]);
+
   return (
     <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 w-72 flex-shrink-0">
       <div className="relative h-48 bg-gray-200">
-        {imageError ? (
+        {imageError || !imageUrl ? (
           <div className="w-full h-full flex items-center justify-center bg-gray-100">
             <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -33,9 +51,10 @@ const Product = ({ id, name, description, category, price }: ProductProps) => {
           </div>
         ) : (
           <img 
-            src={`/product-${id}.jpg`} 
+            src={getImageUrl(imageUrl, id)} 
             alt={name}
-            className="w-full h-full object-cover"
+            className={`w-full h-full object-cover ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+            onLoad={() => setImageLoaded(true)}
             onError={() => setImageError(true)}
           />
         )}

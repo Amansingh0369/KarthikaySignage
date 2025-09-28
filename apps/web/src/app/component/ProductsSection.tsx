@@ -44,7 +44,9 @@ const ProductsSection = () => {
               description: product.description,
               category: product.category,
               price: product.price,
-              imageUrl: product.imageUrl || null,
+              imageUrl: product.neonSigns && product.neonSigns.length > 0 
+                ? product.neonSigns[0].imageUrl 
+                : null,
               isActive: product.isActive,
             }));
           
