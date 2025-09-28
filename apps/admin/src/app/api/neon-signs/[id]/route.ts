@@ -73,4 +73,37 @@ export async function PUT(
   }
 }
 
-// ... existing PATCH function ...
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const body = await request.json();
+    const { isActive } = body;
+
+    const productId = params.id;
+
+    // Update product active status
+    const product = await prisma.product.update({
+      where: { id: productId },
+      data: { isActive },
+    });
+
+    // Update neon sign active status
+    await prisma.neonSign.updateMany({
+      where: { productId },
+      data: { isActive },
+    });
+
+    return NextResponse.json({
+      success: true,
+      product,
+    });
+  } catch (error) {
+    console.error("Error updating neon sign status:", error);
+    return NextResponse.json(
+      { success: false, error: "Failed to update neon sign status" },
+      { status: 500 }
+    );
+  }
+}
